@@ -1,0 +1,48 @@
+tar:
+
+list files:
+tar tvf myfiles.tar
+tar tvf myfiles.tar.gz
+tar tvf myfiles.tar.bz2
+tar tvf myfiles.xz
+
+Create a tarball:
+tar cf myfiles.tar file[0-9]
+
+tar with gzip:
+tar czf myfiles.tar.gz file[0-9]
+
+tar with bunzip:
+tar cjf myfiles.tar.bz2 file[0-9]
+
+tar with xz:
+tar cJf myfile.tar.xz file[0-9]
+
+Untar tar ball,tar.gz,tar.bz2,xz:
+tar -xvf myfiles.tar
+
+Untar files in specified Directory
+tar -xvf myfiles.tar -C /home/prasanna/
+
+Untar Single file from tar File
+tar -xvf myfiles.tar xyz.txt
+
+Untar Multiple files from tar, tar.gz and tar.bz2 File
+tar -xvf myfiles.tar file1.txt file2.txt
+
+Extract Group of Files using Wildcard
+tar -xvf myfiles.tar --wildcards '*.pdf'
+
+Add Files or Directories to tar.gz and tar.bz2 files
+tar -rvf dropbox.tar /home/prasanna/sam.txt
+
+Delete Files or Directories to tar.gz and tar.bz2 files
+tar -f file.tar --delete file1.txt file2.txt
+
+Backup files using tar:
+tar X <(for i in $DIR/*; do file $i | grep -i mpeg; if [ $? -eq 0 ]; then echo $i; fi;done) -cjf backupfile.tar.bz2 $DIR/*
+tar -czvf home.tar.gz /home/
+tar -cjvf home.tar.bz2 /home/
+
+Restore files using tar:
+tar xjf backupfile.tar.bz2 -C user_restore --same-permissions

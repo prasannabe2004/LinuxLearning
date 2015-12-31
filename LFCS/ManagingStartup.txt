@@ -1,0 +1,93 @@
+runlevels:
+0 System halt.
+1 Single-User mode.
+2 Graphical multi-user plus networking.
+3 Same as "2", but not used.
+4 Same as "2", but not used.
+5 Same as "2", but not used.
+6 System reboot
+
+Reboot now:
+sudo reboot
+
+Shutdown now:
+sudo shutdown -h now # Halt now
+
+Shutdown in 3 minutes
+sudo shutdown +3 "The system will shutdown in 3 minutes" # Halt in 3 minutes
+
+Change the system runlevel to 0 will halt system
+sudo telinit 0
+
+Display the current runlevel
+runlevel
+
+ALT+CTRL+DEL Behavior:
+/etc/init/control-alt-delete.conf
+
+====
+SysV
+====
+sysv-rc-conf
+sudo service apache2 stop
+sudo service apache2 start
+sudo service apache2 status
+sudo service apache2 restart
+/etc/init.d/ - The directory containing the actual init scripts.
+/etc/rc?.d/ - The directories containing the links used by init and managed by update-rc.d.
+/etc/init.d/skeleton - Model for use by writers of init.d scripts.
+chkconfig
+
+=======
+upstart :Till Ubuntu 14.04 upstart is used:
+=======
+initctl list | grep networking
+initctl start apache
+update-rc.d foobar defaults
+update-rc.d foobar remove
+update-rc.d foobar disable
+update-rc.d foobar start 20 2 3 4 5 . stop 20 0 1 6 .
+update-rc.d foobar multiuser
+
+Example:
+sudo nano /etc/init/myinit.conf 
+description "A test job file for experimenting with Upstart"
+author "Your Name"
+start on runlevel [2345]
+#exec echo Test Job ran at  `date` >> /var/log/testjob.log
+exec /home/prasanna/myinit &
+nano /home/prasanna/myinit 
+#!/bin/bash
+while [ 1 ]
+do
+	#echo "Init program called"
+	logger "Init program called"
+	sleep 2
+done
+sudo service myinit status
+sudo service myinit start
+sudo service myinit stop
+sudo service myinit restart
+
+=======
+systemd: Since Ubuntu 15.04 systemd is used:
+=======
+
+systemctl start SERVICE.service - Use it to start a service. Does not persist after reboot
+systemctl stop SERVICE.service - Use it to stop a service. Does not persist after reboot
+systemctl restart SERVICE.service - Use it to restart a service
+systemctl reload SERVICE.service - If the service supports it, it will reload the config files related to it without interrupting any process that is using the service.
+systemctl status SERVICE.service - Shows the status of a serviceTells whether a service is currently running.
+systemctl enable SERVICE.service - Turns the service on, on the next reboot or on the next start event. It persists after reboot.
+systemctl disable SERVICE.service - Turns the service off on the next reboot or on the next stop event. It persists after reboot.
+systemctl is-enabled SERVICE.service - Check if a service is currently configured to start or not on the next reboot.
+systemctl is-active SERVICE.service - Check if a service is currently active.
+systemctl show SERVICE.service - Show all the information about the service.
+
+
+init-checkconf /etc/init/testjob.conf
+sudo service <servicename> <control>
+
+
+
+

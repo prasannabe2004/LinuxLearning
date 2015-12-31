@@ -1,0 +1,87 @@
+sudo apt-get install squid3
+sudo apt-get install squidGuard
+
+nano /etc/squid3/squid.conf
+
+http_access allow all
+access_log /var/log/squid3/access.log
+
+sudo service squid3 restart
+
+Firefox:
+Browser->Setings->Network
+HTTP Proxy <IP>  3128
+
+Squid Guard:
+By defaultSquid gaurd stops ip address access.
+
+/etc/squidguard/squidGuard.conf
+
+/etc/squid3/squid.conf
+->url_rewrite_program /usr/bin/squidGuard
+
+service squid3 restart
+
+w3m:
+export HTTP_PROXY=http://127.0.0.1:3128
+
+Blocking or restricting urls/domains:
+
+wget http://www.shallalist.de/Downloads/shallalist.tar.gz
+tar xzf shallalist.tar.gz
+cd BL
+mkdir /var/lib/squidguard/db/BL
+cp -a /opt/3rdparty/BL/anonvpn /var/lib/squidguard/db/BL
+cp -a /opt/3rdparty/BL/hacking /var/lib/squidguard/db/BL
+cp -a /opt/3rdparty/BL/chat /var/lib/squidguard/db/BL
+
+squidGuard -C all
+chown -R proxy:proxy /var/lib/squidguard/db/
+echo "url_rewrite_program $(which squidGuard)" >> /etc/squid/squid.conf
+
+
+vim /etc/squidguard/squidGuard.conf
+dest anonvpn {
+        domainlist      anonvpn/domains
+        urllist         anonvpn/urls
+}
+dest hacking {
+        domainlist      hacking/domains
+        urllist         hacking/urls
+}
+dest chat {
+        domainlist      chat/domains
+        urllist         chat/urls
+}
+acl {
+        localnet {
+                        pass     !anonvpn !hacking !chat !in-addr all
+                        redirect http://www.lds.org
+                }
+        default {
+                        pass     local none
+        }
+}
+
+service squid restart
+
+Removing Restrictions:
+rm -rf /var/lib/squidguard/db/anonvpn
+
+Whitelisting:
+chmod -R 770 /var/lib/squidguard/db/
+chown -R proxy:proxy /var/lib/squidguard/db/
+vi /etc/squidguard/squidGuard.conf
+src pm-clients {
+        ip              10.0.2.0/24
+}
+dest whitelist {
+        domainlist      BL/whitelist/domains
+        urllist         BL/whitelist/urls
+}
+pm-clients {
+                pass whitelist none
+                redirect http://localhost/index.html
+        }
+sudo service squid3 restart
+

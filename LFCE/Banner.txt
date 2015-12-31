@@ -1,0 +1,7 @@
+To Dispaly banner before prompting the password:
+vim /etc/ssh/sshd_config
+uncomment "Banner /etc/issue.net"
+
+To display Banner after succesfull login:
+/etc/update-motd.d/00-header
+

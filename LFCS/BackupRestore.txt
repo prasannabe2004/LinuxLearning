@@ -1,0 +1,7 @@
+dd:
+
+Backup MBR:
+dd if=/dev/sda of=mbr.bkp bs=512 count=1
+
+Restore MBR:
+dd if=mbr.bkp of=/dev/sda bs=512 count=1

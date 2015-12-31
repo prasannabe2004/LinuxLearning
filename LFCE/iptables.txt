@@ -1,0 +1,99 @@
+http://www.thegeekstuff.com/2011/06/iptables-rules-examples/
+https://help.ubuntu.com/community/IptablesHowTo#Saving_iptables
+
+List all the filter table rules:
+sudo iptables -nvL
+
+sudo iptables -I OUTPUT  -p icmp  -d 173.194.46.105 -j DROP
+	Operation Not permitted
+
+sudo iptables -I OUTPUT  -p icmp  -d 173.194.46.110  -j REJECT
+	Destination Port Unreachable
+
+iptables -D OUTPUT -o eth0 -p udp --dport 53 -j REJECT
+iptables -I INPUT -i eth0 -p udp --sport 53 -j REJECT
+
+iptables -I OUTPUT -p icmp -j DROP
+iptables -D OUTPUT -p icmp -j DROP
+
+Log all the incoming ICMP packets:
+sudo iptables -I INPUT -p icmp -j LOG --log-prefix "PMP: "
+
+Destination Port
+sudo iptables -I INPUT -p tcp --dport 80 -j LOG --log-prefix "PMP: "
+
+Destination IP
+sudo iptables -I INPUT -p tcp -d 127.0.0.1 -j LOG --log-prefix "PMP: "
+
+Source IP:
+sudo iptables -I INPUT -p tcp -s 127.0.0.1 -j LOG --log-prefix "PMP: "
+
+Source IP
+sudo iptables -I INPUT -p tcp -s 192.168.56.102 -j LOG --log-prefix "PMP: "
+
+Source subnet
+sudo iptables -I INPUT -p tcp -s 192.168.56.0/24 -j LOG --log-prefix "PMP: "
+
+Source not:
+sudo iptables -I INPUT -p tcp ! -s 192.168.56.0/24 -j LOG --log-prefix "PMP: "
+
+Multiport:
+sudo iptables -I INPUT -p tcp -m multiport --dports 80,443 -j LOG --log-prefix "PMP: "
+
+Multiports with one port:
+sudo iptables -I INPUT -p tcp -m multiport --dports 80 -j LOG --log-prefix "PMP: "
+
+tailf /var/log/syslog
+
+
+Allow Ping from Outside to Inside
+iptables -A INPUT -p icmp --icmp-type echo-request -j LOG --log-prefix "PMP: "
+iptables -A OUTPUT -p icmp --icmp-type echo-reply -j LOG --log-prefix "PMP: "
+
+Allow HTTP
+iptables -A INPUT -i eth0 -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -o eth0 -p tcp --sport 80 -m state --state ESTABLISHED -j ACCEPT
+
+Allow HTTPS
+iptables -A INPUT -i eth0 -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -o eth0 -p tcp --sport 443 -m state --state ESTABLISHED -j ACCEPT
+
+Allow Sendmail or Postfix Traffic
+iptables -A INPUT -i eth0 -p tcp --dport 25 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -o eth0 -p tcp --sport 25 -m state --state ESTABLISHED -j ACCEPT
+
+Allow IMAP2
+iptables -A INPUT -i eth0 -p tcp --dport 143 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -o eth0 -p tcp --sport 143 -m state --state ESTABLISHED -j ACCEPT
+
+Allow IMAP3
+iptables -A INPUT -i eth0 -p tcp --dport 220 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -o eth0 -p tcp --sport 220 -m state --state ESTABLISHED -j ACCEPT
+
+Allow IMAPS
+iptables -A INPUT -i eth0 -p tcp --dport 993 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -o eth0 -p tcp --sport 993 -m state --state ESTABLISHED -j ACCEPT
+
+sudo iptables -F OUTPUT
+
+Persisting the iptable rules:
+apt-get install iptables-persistent
+
+Backup the iptables rules:
+iptables-save > /etc/iptables/rules.v4
+
+Restoring iptable rules:
+iptables-restore < /etc/iptables/rules.v4
+
+
+Adding rule number 3:
+iptables -I OUTPUT 3 -p udp -j DROP
+
+Replace the rule number 3 with REJECT
+sudo iptables -R OUTPUT 3 -p icmp -j REJECT
+
+Set the default policy for FORWARD to DROP
+iptables -P FORWARD DROP
+
+Set the default policy for FORWARD to ACCEPT
+iptables -P FORWARD ACCEPT

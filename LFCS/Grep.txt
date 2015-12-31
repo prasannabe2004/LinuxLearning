@@ -1,0 +1,10 @@
+Grep:
+i ignore case
+v invert match
+n print line number
+E Extended regular expression
+r recursive
+l list only filenames
+H print filename for each match
+h suppress prefixing filenames
+c count the results

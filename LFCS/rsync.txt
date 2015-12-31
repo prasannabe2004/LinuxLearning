@@ -1,0 +1,42 @@
+rsync:
+apt-get install rsync
+rsync options source destination
+rsync -av src dst
+rsync -avzh /root/rpmpkgs /tmp/backups/
+
+Sync the files to remote host
+rsync -avz rpmpkgs/ root@192.168.0.101:/home/
+
+Sync files from remote host
+rsync -avzh root@192.168.0.100:/home/tarunika/rpmpkgs /tmp/myrpms
+
+Sync over ssh to remote host
+rsync -avzhe ssh root@192.168.0.100:/root/install.log /tmp/
+
+Sync over ssh from remote host
+rsync -avzhe ssh backup.tar root@192.168.0.100:/backups/
+
+Show progress
+rsync -avzhe ssh --progress /home/rpmpkgs root@192.168.0.100:/root/rpmpkgs
+
+Include and exclude files
+rsync -avze ssh --include 'R*' --exclude '*' root@192.168.0.101:/var/lib/rpm/ /root/rpm
+
+Delete dst files which is not in src
+rsync -avz --delete root@192.168.0.100:/var/lib/rpm/ .
+
+Transfer files one to max size of 200k
+rsync -avzhe ssh --max-size='200k' /var/lib/rpm/ root@192.168.0.100:/root/tmprpm
+
+Delete src backup files 
+rsync --remove-source-files -zvh backup.tar /tmp/backups/
+
+Dry run before deleting src files
+rsync --dry-run --remove-source-files -zvh backup.tar /tmp/backups/
+
+Limit the bandwidth to 100
+rsync --bwlimit=100 -avzhe ssh  /var/lib/rpm/  root@192.168.0.100:/root/tmprpm/
+
+Sync whole files instead of bytes/blocks
+rsync -zvhW backup.tar /tmp/backups/backup.tar
+

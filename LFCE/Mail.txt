@@ -1,0 +1,29 @@
+MTA (short for Mail or Message Transport Agent), aka mail relay, is a software that is in charge of transferring email messages from a server to a client (and the other way around as well). 
+In this series, Postfix acts as our MTA. (SMTP Server)
+---------------------------------------------------------------
+MUA, or Mail User Agent, is a computer program used to access and manage the user’s email inboxes. 
+Examples of MUAs:
+Thunderbird, Outlook, 
+
+Webmail interfaces:
+Gmail, Outlook.com, to name a few. 
+--------------------------------------------------------------
+MDA (short for Message or Mail Delivery Agent) is the software part that actually delivers email messages to user’s inboxes. 
+
+Example:
+Dovecot as our MDA. Dovecot will also will handle user authentication. Dovecot is an open source IMAP and POP3 email server for Linux/UNIX-like systems, written with security primarily in mind.
+--------------------------------------------------------------
+In order for these components to be able to “talk” to each other, they must “speak” the same “language” (or protocol), namely SMTP (Simple Mail Transfer Protocol) as defined in the RFC 2821. Most likely, you will have to refer to that RFC while setting up your mail server environment.
+Other protocols that we need to take into account are IMAP4 (Internet Message Access Protocol), which allows to manage email messages directly on the server without downloading them to our client’s hard drive, and POP3 (Post Office Protocol), which allows to download the messages and folders to the user’s computer.
+-------------------------------------------------------------
+
+Suppose you use hMailServer as your email server to send an email to bill@microsoft.com.
+
+    You click Send in your email client, say, Outlook Express.
+    Outlook Express delivers the email to hMailServer using the SMTP protocol.
+    hMailServer delivers the email to Microsoft's mail server, mail.microsoft.com, using SMTP.
+    Bill's Mozilla Mail client downloads the email from mail.microsoft.com to his laptop using the POP3 protocol (or IMAP).
+
+
+vim /etc/hosts
+192.168.0.15 example.com.ar mailserver

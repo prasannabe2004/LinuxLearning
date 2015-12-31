@@ -1,0 +1,37 @@
+
+Create user called test with home directory as /home/test/t, shell as /bin/bash
+sudo useradd -d /home/test/t -s /bin/bash  -m test
+
+Change the the shell to sh for test user
+sudo usermod -s /bin/sh test
+
+Change the the shell to none for test user
+sudo usermod -s /bin/false test
+
+Adding test to sudo group:
+sudo  usermod -g sudo test
+
+sudo  usermod -g test test
+
+No password for sudo users:
+vim /etc/sudoers
+%sudo	ALL=(ALL:ALL) NOPASSWD:ALL
+
+usermod --lock prasanna
+usermod --unlock prasanna
+
+Setting password expiry for accounts:
+sudo chage test
+
+Force user to change the password while login:
+sudo chage -d 0 test
+
+See the users password expiry details:
+sudo chage -l test
+
+Add a new group
+sudo groupadd babbage
+
+useradd prasanna
+usermod --home /tmp prasanna
+

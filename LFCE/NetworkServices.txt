@@ -1,0 +1,16 @@
+NFS Server:
+sudo apt-get install nfs-kernel-server
+
+Firewall;
+lsmod | grep ip_tables
+modprobe -a ip_tables
+
+To persist iptables rules:
+apt-get install iptables-persistent
+iptables-save > /etc/iptables/rules.v4
+
+To restore iptables:
+iptables-restore < /etc/iptables/rules.v4
+
+find the public IP:
+dig +short myip.opendns.com @resolver1.opendns.com

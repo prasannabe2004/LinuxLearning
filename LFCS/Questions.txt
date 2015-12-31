@@ -1,0 +1,71 @@
+limit the number of process a group can create for a shell session
+
+make swap space and turn on
+
+remove the automatic mounting of disks
+
+mount disks with ro instead of rw
+
+create partion 50G, label it, ext4 format, add fstab
+create lvm partion 10G, label it, ext4 format, add fstab
+
+crontab for every 1 minute to find scan_filesystem and kill it
+
+configuring user:
+	default shell
+	default home directory
+	default Path
+
+fix account expiry for an user using aging
+
+fix shell for a user instead of /bin/false
+
+create a group
+
+make all users to seet last command by wtmp
+
+extract a tar to different directory
+
+create a tar in /var so all user get read access
+
+find files of size less than 1024 bytes and delete
+
+find files with pattern and remove it
+
+find the service for 1026 port number and put in a txt file
+
+find the service with tcp and imaps and imap2 and put it in a txt file
+
+create a script that displays user name and default gateway ip
+
+NEWS file touch for every user login
+
+find command with mv 
+
+rc.local to excecute at boot time
+
+nfs in fstab file
+
+add a specific path to $PATH for an user
+
+vim:
+goto 7777 line
+Move the line to first line
+delete 7000 line
+replace "Earth" with some pattern
+Add a new line at end of file with text "V... "
+
+install tmux
+
+install nfs client
+
+mount nfs on fstab
+
+copy files from one dir to another
+
+cut the second coloumn from a file and rediecrt to different file
+
+grep for lines with "root" and rediect to new file
+
+
+

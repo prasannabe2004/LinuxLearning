@@ -1,0 +1,36 @@
+apt-get install vsftpd
+
+apt-cache search vsftpd
+apt-cache show vsftpd
+apt-cache showpkg vsftpd
+apt-cache stats
+
+apt-get update
+apt-get upgrade
+apt-get dist-upgrade
+apt-get install '*name*'
+apt-get install packageName --no-upgrade
+apt-get install packageName --only-upgrade
+apt-get install vsftpd=2.3.5-3ubuntu1
+apt-get remove vsftpd
+apt-get purge vsftpd
+apt-get remove --purge vsftpd
+apt-get clean
+apt-get --download-only source vsftpd
+apt-get source vsftpd
+apt-get --compile source goaccess
+apt-get download nethogs
+apt-get changelog vsftpd
+apt-get check
+apt-get autoclean
+apt-get autoremove vsftpd
+
+dpkg -i file.deb
+dpkg -l
+dpkg --status package_name
+
+Installing package from 3rd part source:
+wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+sudo apt-get update 
+sudo apt-get install google-chrome-stable

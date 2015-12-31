@@ -1,0 +1,43 @@
+7 questions
+1. Apache 
+	with same root directory and default.conf
+	download unrestricted.txt file
+	download restricted.txt with username and password
+
+2. Squid
+	listen to 8000 tcp port
+	configure cache dir /var/spool/httpproxy
+	configure cache size to 100MB
+	access log /var/log/squid3/httpproxy
+	w3m configure with squid for a user
+	allow quid access on lo interface
+
+3. Apache SSL site with https
+	SSL with localhost configuring key and cert file 
+
+4. Setup SMTP Server
+	allow mail delivery to users
+	create aliases
+	 
+5. Setup IMAP and IMAPS server
+	install dovecot for IMAP and IMAPS
+	reject all imap server
+
+6. Firewall with iptables
+	boottime persist
+	log all https traffic
+	allow multiple destination ports
+	allow only from specific subnet
+
+7. SSH login without passwd
+
+server:
+sudo apt-get install openssh-server
+mkdir /home/prasanna/.ssh
+cat /home/prasanna/.ssh/id_rsa.pub > /home/prasanna/.ssh/authorized-keys
+
+client:
+sudo apt-get install openssh-server
+ssh-keygen
+scp /home/prasanna/.ssh/id_rsa.pub server:/home/prasanna/.ssh
+ssh prasanna@server

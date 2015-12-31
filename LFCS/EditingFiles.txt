@@ -1,0 +1,71 @@
+sed:
+
+Display file as is:
+sed '' command.txt
+
+Delete nth line from file:
+sed 'nd' command.txt
+Ex: sed '1d' command.txt
+
+delete last line:
+sed '$d' command.txt
+
+Delete n lines:
+sed '1,4d' command.txt
+
+Delete all blank lines:
+sed '/^$/d' command.txt
+
+Delete line which has a pattern:
+sed '/pattern/d' command.txt
+
+find and replace:
+sed '/findstring/replacestring/g' command.txt
+
+Find and replace first occurances in each line:
+sed 's/a/A/' printer2.txt
+
+Find and replace all occurances in each line:
+sed 's/a/A/g' printer2.txt
+
+replace ^M charaters: Under UNIX: convert DOS newlines (CR/LF) to Unix format
+sed 's/^M//g' commmand.txt // long press ctrl followed by v and m for ^M
+sed 's/.$//g' command.txt
+
+double space a file:
+sed 'G' command.txt
+
+triple space a file:
+sed 'G;G' command.txt
+
+Strip leading white spaces:
+sed 's/^[ \t]*//g' command.txt
+
+Delete trailing whitespace (spaces/tabs) from end of each line
+sed 's/^[ \t]*$//g' command.txt
+
+find Blutooth pattern
+dmesg | sed -n '/Bluetooth/p'
+
+Find the line starting with #
+sed -n '/^#/p' /etc/netconfig
+
+print first 5 lines with starting pattern:
+sed -n '/Nov 10 13:35:52/p' /var/log/syslog | sed -n 1,5p
+
+Append 'Prasanna' from 
+sed '1,5a Prasanna'  command.txt
+
+tr:
+change all lower case to upper case
+cat /etc/squid3/squid.conf | tr [:lower:] [:upper:]
+
+cut,uniq,sort:
+cat /etc/passwd | cut -d: -f6 | sort | uniq
+
+nl:
+nl - To write a file to standard output with line numbers added use the nl command. 
+
+
+awk:
+df -h | awk '/none/ {print $6, "\t", $4}'

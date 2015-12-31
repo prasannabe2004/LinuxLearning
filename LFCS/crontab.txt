@@ -1,0 +1,27 @@
+cronjob:
+minute (0-59), hour (0-23, 0 = midnight), day (1-31), month (1-12), weekday (0-6, 0 = Sunday), command
+
+Run cronjob for every minute:
+crontab -e
+* * * * * /home/prasanna/sam.sh
+
+Run cronjob for every hour:
+crontab -e
+0 * * * * /home/prasanna/sam.sh
+
+Run cronjob for every day:
+crontab -e
+0 0 * * * /home/prasanna/sam.sh
+
+Run cronjob for every 10 minutes:
+crontab -e
+*/10 * * * * /home/prasanna/sam.sh
+
+Run cronjob for every 2 minutes:
+crontab -e
+*/2 * * * * /home/prasanna/sam.sh
+
+Installing Crontab From a Cron File:
+crontab -l
+crontab cron-file.txt
+crontab -l

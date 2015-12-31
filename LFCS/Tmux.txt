@@ -1,0 +1,7 @@
+#tmux
+
+Invoke new vertical shell
+Press ctrl+b %
+
+Switch to other shell
+Press ctrl+b o

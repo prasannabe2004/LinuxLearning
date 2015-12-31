@@ -1,0 +1,33 @@
+Managing user processes:
+
+stress:
+
+Spawn 2 workers (sqrt()) for 3 hours
+stress -c 2  --timeout 3h
+
+Spawn 10 workers(sync()) for 3 hours
+stress -i 10 --timeout 3h
+
+Spawn 10 workers(malloc()/free()) for 3 hours for 1G
+stress -m 1 --vm-bytes 1G --timeout 3h
+
+stress --hdd 1 --hdd-bytes 1G --timeout 3h
+
+top,htop:
+
+
+ps:
+ps aux | grep stress
+ps -ef | grep stress
+
+pgrep:
+pgrep stress
+
+kill:
+kill -9 stress
+
+renice:
+renice 15 <pid for stress>
+renice -5 -u prasanna
+
+

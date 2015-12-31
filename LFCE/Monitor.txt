@@ -1,0 +1,24 @@
+ss
+	ss -t -n
+	ss -t -l -n 
+	ss -u -l -n
+
+nmap -A -sS 192.168.56.101
+ 
+nmon
+vnstat
+
+scp
+sftp
+
+top
+free -m
+
+df
+du
+
+find /home -type f -empty --delete
+
+ps
+
+ps -eo user,comm,pip,ppid,%mem --sort -%mem

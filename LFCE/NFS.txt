@@ -1,0 +1,28 @@
+nslookup only does proper DNS resolution, which is significantly different from the 
+Name Service Switch subsystem that your other applications use; that is to say 
+nslookup ignores /etc/hosts and mDNS.
+
+https://www.howtoforge.com/how-to-configure-a-nfs-server-and-mount-nfs-shares-on-ubuntu-14.04
+
+NFS server:
+sudo apt-get install nfs-kernel-server
+sudo apt-get install rpcbind
+sudo mkdir /var/nfs
+cat /etc/exports
+/var/nfs <Client IP>(rw,sync,no_subtree_check)
+/home/prasanna	<Client IP>(rw,no_root_squash,sync,no_subtree_check)
+sudo exportfs -a
+sudo /etc/init.d/nfs-kernel-server restart
+
+NFS Client:
+sudo apt-get install nfs-common
+sudo mount -t nfs -o v3   10.10.214.64:/home/prasanna /home/prasanna/nfs/
+
+Configuring idmapd:
+mapping of NFSv4 names (user@mydomain) to user and group IDs
+/etc/default/nfs-common
+NEED_IDMAPD=YES
+/etc/idmapd.conf
+Domain = yourdomain.com
+service nfs-common start
+

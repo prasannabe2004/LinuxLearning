@@ -1,0 +1,42 @@
+LVM:
+apt-get install lvm2
+
+Example:
+sudo fdisk /dev/sdb // Create 3 partitions with LVK as partition type
+sudo pvcreate /dev/sdb1
+sudo pvcreate /dev/sdb2
+sudo pvcreate /dev/sdb3
+pvdisplay
+
+sudo vgcreate vg0 /dev/sdb1 /dev/sdb2 /dev/sdb3
+vgdisplay
+
+sudo lvcreate -L 5G -n lv0 vg0
+sudo lvcreate -L 2G -n lv1 vg0
+lvdisplay
+
+sudo ls /dev/mapper/vg0-lv0
+sudo ls /dev/mapper/vg0-lv1
+
+sudo mkfs.ext4 /dev/mapper/vg0-lv0
+sudo mkfs.ext4 /dev/mapper/vg0-lv1
+
+sudo mkdir /mnt/l-vol0
+sudo mkdir /mnt/l-vol1
+
+sudo mount -t ext4 /dev/mapper/vg0-lv0 /mnt/l-vol0
+sudo mount -t ext4 /dev/mapper/vg0-lv1 /mnt/l-vol1
+
+Shrink LVM:
+First, we unmount.
+umount /dev/mapper/vg0-lv1
+
+Check the file system.
+e2fsck -f /dev/mapper/vg0-lv1
+
+Resize the file system.
+resize2fs -p /dev/mapper/vg0-lv1 9G
+
+Reduce the size of the logical volume.
+lvreduce -L -1G /dev/mapper/vg0-lv1
+

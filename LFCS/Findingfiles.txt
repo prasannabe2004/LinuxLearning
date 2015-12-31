@@ -1,0 +1,43 @@
+find:
+Find all files:
+find . -type f
+
+find by size:
+find . -type f -size +2M
+
+Find files which were modified less than 180 days
+find . -mtime -180
+
+Find files which were modified greater than 180 days
+find . -mtime +180
+
+Find files which were access time less than 180 days
+find . -atime -180
+
+Find files which were access time greater than 180 days
+find . -atime +180
+
+locate hello.txt
+updatedb
+
+Find and move files:
+find . -maxdepth 1 -name "*.cpp" -exec -exec mv {} pdf/ \;
+
+find and move files using xargs:
+find . -maxdepth 1 -iname "*.bak" -type f | xargs -I '{}' mv {} backup/
+
+Find all the SGID bit files whose permissions set to 644
+find / -perm 2644
+
+Find all the SUID bit files whose permissions set to 755
+find / -perm 4755
+
+Find Files with 755 Permissions and Chmod to 777
+find . -maxdepth 1  -type f -perm 0755 -print -exec chmod 777 {} \;
+
+Find Files with 777 Permissions and move to dir x
+find . -maxdepth 1  -type f -perm 0777 -exec mv {} ./x  \;
+
+File all Hidden Files:
+find /tmp -type f -name ".*"
+

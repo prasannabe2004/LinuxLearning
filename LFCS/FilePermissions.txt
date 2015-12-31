@@ -1,0 +1,126 @@
+chown:
+chown user:group filename
+
+chgrp:
+chgrp <groupname> filename
+
+chmod:(rwxrwxrwx)
+chmod 774 myfile
+chmod g+w myfile
+chmod +x myfile.sh
+chmod -x myfile.sh
+
+Sticky Bit: (http://www.thegeekstuff.com/2013/02/sticky-bit/)
+A Sticky bit is a permission bit that is set on a file or a directory that lets only the owner of the file/directory or 
+the root user to delete or rename the file. No other user is given privileges to delete the file created by some other user.
+chmod +t sam.txt
+
+Setuid: (http://www.cyberciti.biz/faq/unix-bsd-linux-setuid-file/)
+The setuid (set user id) is a permission bit, that allows the users to exec a program with the permissions of its owner.
+chmod u+s sam.txt 
+Example: passwd
+
+Setgid:
+The setgid (set group id) is a bit that allows the user to exec a program with the permissions of the group owner.
+chmod g+s sam.txt 
+
+0 - No special bits
+1 - Sticky bit set
+2 - setgid bit
+3 - setuid bit
+
+No special bits with user-RW and group-RW:
+chmod 0660 sam.txt 
+
+Set user-RW,group-RW and sticky bit
+chmod 1660 sam.txt 
+
+set user-RW group-RW , sticky bit and setuid
+chmod 4660 sam.txt 
+
+set user-RW group-RW , sticky bit and setgid
+chmod 3660 sam.txt 
+
+mount:
+Remount root filesystem in rw mode:
+mount -n -o remount,rw /
+
+Mounting with default options:
+mount -t ext4 /dev/sdg1 /mnt -o defaults
+
+man chattr
+
+file is immutable:
+chattr +i /var/tmp/hello.txt
+
+file is mutable
+chattr -i /var/tmp/hello.txt
+
+file is only apppend:
+chattr +a /var/tmp/hello.txt
+
+List the attributes:
+lsattr /var/tmp/hello.txt
+
+status of the file:
+stat /var/tmp/hello.txt
+
+
+Adjustable attributes:
+'+' - Adds selected attributes
+'-' - Removes selected attributes
+'=' - Specifies that there are the only attributes 
+A - no atime updates
+a - append only
+C - no copy on write
+c - compressed
+D - synchronous directory updates
+d - no dump
+e - extent format
+i - immutable (Superuser only)
+j - data journalling
+S - synchronous updates
+s - secure deletion
+T - top of directory hierarchy
+t - no tail-merging
+u - undeletable 
+
+Read only attributes:
+h - huge file
+E - compression error
+I - indexed directory
+X - compression raw access
+Z - compressed dirty file (Z)
+
+
+ACL:
+
+List the acl for sam.txt:
+getfacl sam.txt
+
+Setting Test user to read/write the sam.txt
+setfacl -m g:test:rw sam.txt
+
+Remove the ACL:
+setfacl -x g:test: sam.txt
+
+Set SUID:passwd,ping
+sudo chmod u+s /sbin/fdisk 
+sudo chmod u-s /sbin/fdisk 
+
+Set Sticky bit:/tmp, /var/tmp
+chmod +t [path_to_directory]
+
+
+Passwd:
+Change passwd for prasanna:
+passwd prasanna
+
+List the aging parameters for prasanna
+chage -l prasanna
+
+Changing the aging parameters
+sudo chage -E 2014-12-01 -m 10 -M 20 prasanna
+
+
+

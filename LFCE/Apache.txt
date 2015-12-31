@@ -1,0 +1,64 @@
+Apache server:
+sudo apt-get install apache2
+
+/etc/apache2/site-available/000-default.conf
+
+/etc/apache2/site-available/mysite.conf
+
+a2ensite mysite
+a2dissite default
+
+Logs:
+/var/log/apache2/access.log
+/var/log/apache2/error.log
+
+
+Log configuration:
+/etc/apache2/apache2.conf
+LogFormat
+
+%h		Remote hostname or IP address
+ %l		Remote log name
+ %u	Remote user if the request is authenticated
+ %t		Date and time when the request was received
+ %r		First line of request to the server
+ %>s	Final status of the request
+ %b	Size of the response [bytes]
+
+ulimit and enviroment variable:
+/etc/apache2/envvars
+
+sudo mkdir -p /var/www/html/ilovelinux.com/public_html
+sudo chmod -R 755 /var/www/html/ilovelinux.com/public_html/
+sudo vim /var/www/html/ilovelinux.com/public_html/index.html
+sudo cp /etc/apache2/sites-available/mysite.conf  /etc/apache2/sites-available/ilovelinux.conf
+sudo vim /etc/apache2/sites-available/ilovelinux.conf   
+sudo a2ensite ilovelinux
+sudo /etc/init.d/apache2 reload
+
+sudo mkdir -p /var/www/html/linuxrocks.org/public_html
+sudo chmod -R 755 /var/www/html/linuxrocks.org/public_html
+sudo vim /var/www/html/linuxrocks.org/public_html/index.html
+sudo cp /etc/apache2/sites-available/ilovelinux.conf /etc/apache2/sites-available/linuxrocks.conf
+sudo vim /etc/apache2/sites-available/linuxrocks.conf   
+sudo a2ensite linuxrocks
+sudo /etc/init.d/apache2 reload
+
+Apache with SSL:
+a2enmod ssl
+sudo mkdir /etc/apache2/ssl-certs
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/apache2/ssl-certs/apache.key -out /etc/apache2/ssl-certs/apache.crt
+sudo cp /etc/apache2/sites-available/default-ssl.conf  /etc/apache2/sites-available/ilovelinux.conf
+sudo vim /etc/apache2/sites-available/ilovelinux.conf
+sudo service apache2 restart
+
+Apache with username and passwd:
+https://www.digitalocean.com/community/tutorials/how-to-set-up-password-authentication-with-apache-on-ubuntu-14-04
+sudo htpasswd -c /etc/apache2/.htpasswd prasanna
+sudo vim /etc/apache2/sites-available/secure.conf
+<Directory "/var/www/html/secure.com/public_html">
+        AuthType Basic
+        AuthName "Restricted Content"
+        AuthUserFile /etc/apache2/.htpasswd
+        Require valid-user
+</Directory>

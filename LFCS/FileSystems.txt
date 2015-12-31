@@ -1,0 +1,45 @@
+Partitioning Disks:
+finding block devices:
+lsblk
+
+http://www.howtogeek.com/193669/whats-the-difference-between-gpt-and-mbr-when-partitioning-a-drive/
+Run the fdisk utility to edit the partition table. If the existing drive was created with GUID Partition Table (GPT) layout 
+of the partition table on the disk instead of Master Boot Record (MBR) then the gparted utility must be used.
+
+fdisk:
+fdisk /dev/sdb
+
+gdisk:
+gdisk /dev/sdb
+
+Making filesystems:
+mkfs.ext4
+
+Making swap:
+fdisk /dev/sdX [Select Swap type]
+mkswap /dev/sdX
+swapon /dev/sdX
+swapoff /dev/sdX
+
+Filesystem repair:
+fsck -y //Say yes to all questions
+fsck -a //Same as -y
+fsck -n //report errors dot fix them
+fsck -V //verbose output
+fsck -R //skip root filesystem
+
+Encrypting filesystem:
+sudo cryptsetup luksFormat /dev/sdb1
+sudo cryptsetup luksOpen /dev/sdb1 secret-disk
+
+sudo vi /etc/crypttab
+# <target name> <source device> <key file> <options>
+secret-disk /dev/sdb1
+
+sudo mkfs.ext4 /dev/sdb1
+sudo mkdir /mnt/secret
+
+sudo vi /etc/fstab
+# Secret Disk
+/dev/mapper/secret-disk /mnt/secret ext4 defaults 1 2
+sudo mount -a

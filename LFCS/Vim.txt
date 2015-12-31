@@ -1,0 +1,18 @@
+x, Del		Delete character under the cursor
+<Esc>		Escape mode
+i			Insert Mode
+:wq!		Save and quit
+[count]dd	Delete [count] lines
+D 			Delete till end of line
+u 			Undo the last changes
+.			Repeat the last change
+/pattern	Search pattern forward
+?pattern	Search pattern backward
+n			Repeat the last search
+N 			Repeat the last search in opposite direction
+h			left
+l 			right
+j			Down
+k			Up
+
+
