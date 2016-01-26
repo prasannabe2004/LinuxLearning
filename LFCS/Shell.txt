@@ -1,0 +1,6 @@
+Remote login users welcome message
+~/.bash_login
+
+Remote login users Bye message
+~/.bash_logout
+
