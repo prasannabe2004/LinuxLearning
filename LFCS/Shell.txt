@@ -1,6 +1,20 @@
-Remote login users welcome message
+~/.bash_profile
+This file is user specific file that gets loaded each time user creates a remote session i.e ssh. If this file is not present, system looks for either .bash_login or .profile files
+
 ~/.bash_login
+This file is user specific file that gets loaded each time user creates a remote session i.e ssh only if ~/bash_profile doesnt exists
 
-Remote login users Bye message
 ~/.bash_logout
+This file is user specific file that gets loaded each time user logs out from a remote session i.e ssh
 
+~/.bashrc:
+This file is user specific file that gets loaded each time user creates a new local session i.e. in simple words, opens a new terminal
+
+/etc/environment:
+This file is system wide file for creating, editing or removing any environment variables. Environment variables created in this file are accessible all throughout the system, by each and every user, both locally and remotely.
+
+/etc/bash.bashrc:
+System wide bashrc file. This file is loaded once for every user, each time that user opens a local terminal session. Environment variables created in this file are accessible for all users but only through local terminal session
+
+/etc/profile:
+System wide profile file. All the variables created in this file are accessible by every user on the system, but only if that user’s session is invoked remotely, i.e. via remote login. Any variable in this file will not be accessible for local login session i.e. when user opens a new terminal on his local system.
