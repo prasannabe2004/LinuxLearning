@@ -102,6 +102,64 @@ void cat_io_uring_multi(int filec, char **files)
     io_uring_queue_exit(&ring);
 }
 
+/* Traditional: sequentially process each file with read()/write() */
+static void cat_traditional_multi(int filec, char **files)
+{
+    int devnull = open("/dev/null", O_WRONLY);
+    if (devnull < 0)
+    {
+        perror("open /dev/null");
+        exit(1);
+    }
+
+    char *buf = malloc(BLOCK_SIZE);
+    if (!buf)
+    {
+        perror("malloc");
+        exit(1);
+    }
+
+    for (int i = 0; i < filec; i++)
+    {
+        int fd = open(files[i], O_RDONLY);
+        if (fd < 0)
+        {
+            perror("open");
+            exit(1);
+        }
+
+        ssize_t n;
+        while ((n = read(fd, buf, BLOCK_SIZE)) > 0)
+        {
+            ssize_t off = 0;
+            while (off < n)
+            {
+                ssize_t w = write(devnull, buf + off, n - off);
+                if (w < 0)
+                {
+                    if (errno == EINTR)
+                        continue;
+                    perror("write");
+                    close(fd);
+                    close(devnull);
+                    free(buf);
+                    exit(1);
+                }
+                off += w;
+            }
+        }
+        if (n < 0)
+        {
+            perror("read");
+        }
+
+        close(fd);
+    }
+
+    free(buf);
+    close(devnull);
+}
+
 // Traditional cat using read/write
 void cat_traditional(const char *filename)
 {
@@ -213,7 +271,7 @@ int main(int argc, char *argv[])
     }
 
     double t1 = now_sec();
-    cat_traditional(argv[1]);
+    cat_traditional_multi(argc - 1, &argv[1]);
     double t2 = now_sec();
 
     double t3 = now_sec();
